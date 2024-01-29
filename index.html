@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Percobaan Faza</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="slidesho.css">
+    <style>
+      body {
+        background-image: url("bg jo.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
+
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="D:\Downloads\miles-morales-3840x2160-11806.jpeg" height="50px" width="150px">
+        </div>
+        <div class="header-right">
+          <a href="#" class="login">Log In</a>
+        </div>
+      </div>
+    </header>
+    <div class="top-wrapper">
+      <div class="container">
+        <h1>HI.</h1>
+        <h1>iki medsos ku.</h1>
+        <p>jangan lupa follow ygy</p>
+        <p></p>
+        <div class="btn-wrapper">
+          <a href="#" class="btn Instagram"><span><i class="fa-brands fa-instagram fa-bounce"></i></span>Instagram</a>
+          <p>atau</p>
+          <a href="#" class="btn facebook"><span><i class="fa-brands fa-facebook fa-bounce pull-left" style="color: #ffffff;"></i></span>Facebook</a>
+          <a href="#" class="btn twitter"><span><i class="fa-brands fa-x-twitter fa-shake" style="color: #ffffff;"></i></span>Twitter</a>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-wrapper">
+      <div class="container">
+        <div class="heading">
+          <h2>Portofolioku disini</h2>
+        </div>
+        <div class="lessons">
+          <div class="slideshow-container">
+            <div class="slide">
+              <div class="lesson-icon">
+                <img src="https://prog-8.com/images/html/advanced/html.png">
+                <p>Fotografi</p>
+              </div>
+              <p class="txt-contents">Beberapa hasil jepretan saya.</p>
+            </div>
+            <div class="slide">
+              <div class="lesson-icon">
+                <img src="https://prog-8.com/images/html/advanced/jQuery.png">
+                <p>3d Animation</p>
+              </div>
+              <p class="txt-contents">Beberapa hasil render dari objek 3 dimensi saya menggunakan blender</p>
+            </div>
+            <div class="slide">
+              <div class="lesson-icon">
+                <img src="https://prog-8.com/images/html/advanced/ruby.png">
+                <p>Teks</p>
+              </div>
+              <p class="txt-contents">Selain laprak, saya juga suka menulis!</p>
+            </div>
+            <div class="slide">
+              <div class="lesson-icon">
+                <img src="https://prog-8.com/images/html/advanced/php.png">
+                <p>Who Am I?</p>
+              </div>
+              <p class="txt-contents">long life learner</p>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<body>
+  <div class="comment">
+    <h1>Kolom Komentar</h1>
+    <form id="comment-form" action="/submit-comment" method="post">
+        <label for="name">Nama:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="email">Email (opsional):</label>
+        <input type="email" id="email" name="email">
+        <br>
+        <label for="comment">Komentar:</label>
+        <textarea id="comment" name="comment" required></textarea>
+        <br>
+        <button type="submit">Kirim Komentar</button>
+    </form>
+    <h2>Komentar</h2>
+    <div id="comments">
+        <!-- Komentar akan ditampilkan disini -->
+    </div>
+    <script>
+        // Fungsi untuk mengambil komentar dari server
+        function getComments() {
+            fetch('/get-comments')
+                .then(response => response.json())
+                .then(comments => {
+                    const commentsDiv = document.getElementById('comments');
+                    commentsDiv.innerHTML = '';
+                    comments.forEach(comment => {
+                        const commentDiv = document.createElement('div');
+                        commentDiv.innerHTML = `
+                            <h3>${comment.name}</h3>
+                            <p>${comment.email ? comment.email : '(tidak ada email)'}</p>
+                            <p>${comment.comment}</p>
+                        `;
+                        commentsDiv.appendChild(commentDiv);
+                    });
+                });
+        }
+
+        // Fungsi untuk mengirim komentar ke server
+        function submitComment(event) {
+            event.preventDefault();
+            const form = document.getElementById('comment-form');
+            const formData = new FormData(form);
+            fetch('/submit-comment', {
+                method: 'POST',
+                body: formData
+            })
+            .then(() => {
+                form.reset();
+                getComments();
+            });
+        }
+
+        // Tambahkan event listener untuk mengirim komentar
+        document.getElementById('comment-form').addEventListener('submit', submitComment);
+
+        // Ambil komentar saat pertama kali halaman dimuat
+        getComments();
+    </script>
+</body>
+ 
+
+
+    <footer>
+      <div class="container">
+        <img src="https://prog-8.com/images/html/advanced/footer_logo.png">
+        <p>Learn to code, learn to be creative.</p>
+      </div>
+    </footer>
+  </body>
+</html>
